@@ -40,14 +40,20 @@ public class Panel extends JPanel implements Runnable {
     
     Setter set=new Setter(this);
     Thread gameThread;
-    KeyInput KIP=new KeyInput();
+    KeyInput KIP=new KeyInput(this);
     public Player player=new Player(this,KIP);
     public UI ui=new UI(this);
     //khai báo và khởi tạo quái
     Alien[][] alien=new Alien[4][6];
 
     Bomb bom = new Bomb(this,KIP);
-   
+   // Trang thai game
+    public int gameState =0;
+    public final int playState = 1;
+    public final int menuState= 0;
+    public final int helpState=2;
+    public final int pauseState=3;
+
     Panel(){
         this.setPreferredSize(new Dimension(screenWidth,screenHight));
         this.setBackground(Color.black);
@@ -62,6 +68,7 @@ public class Panel extends JPanel implements Runnable {
 
     public void setUpGame(){
         set.setAlien();
+        gameState = menuState;
     }
     @Override
 public void run() {
@@ -119,6 +126,17 @@ public void run() {
     
     //Thay đổi vị trí nhân vật và quái,bom
     public void update(){
+        if (gameState == menuState) {
+
+        }
+        if (gameState==pauseState){
+
+        }
+        if (gameState==helpState){
+
+        }
+
+        if (gameState == playState) {
         player.update();
         checkDestroyed();
         for(int i=0;i<4;i++){
@@ -129,11 +147,21 @@ public void run() {
         bom.update();
         checkPlayerHit(); // Gọi phương thức kiểm tra trúng đạn
     }
+    }
     //vẽ nhân vật và quái,bom lên màn hình
         public void paintComponent(Graphics g){
         super.paintComponent(g);
-
         Graphics2D g2=(Graphics2D)g;
+            if (gameState == menuState) {
+                ui.drawMenuS(g2);
+            }
+            if(gameState==helpState){
+                ui.drawHelpScreen(g2);
+            }
+            if(gameState==pauseState){
+                ui.drawPauseScreen(g2);
+            }
+            if (gameState ==playState){
         //vẽ nhân vật
         player.draw(g2);
         //vẽ quái
@@ -158,7 +186,7 @@ public void run() {
         //in bộ đếm mạng
         drawLives(g2);
         
-        g2.dispose();
+        g2.dispose();}
     }
     //kiểm tra xem có bị trúng đạn không
     public void checkPlayerHit() {
