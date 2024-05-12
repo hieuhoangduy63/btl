@@ -4,12 +4,17 @@ package main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeyInput implements KeyListener {
+public class KeyInput implements KeyListener  {
+    Panel p;
     public boolean upPressed;
     public boolean downPressed;
     public boolean leftPressed;
     public boolean rightPressed;
     public boolean spacePressed;
+
+    public KeyInput(Panel p){
+        this.p =p;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -19,24 +24,66 @@ public class KeyInput implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-      if (code == KeyEvent.VK_W) {
-         upPressed = true;
-      }
+        if (p.gameState == p.menuState) {
+            if (code == KeyEvent.VK_W) {
+                p.ui.comN--;
+                if(p.ui.comN<0){
+                    p.ui.comN=2;
 
-      else if (code == KeyEvent.VK_S) {
-         downPressed = true;
-      }
+                }
+            } else if (code == KeyEvent.VK_S) {
+                p.ui.comN++;
+                if(p.ui.comN>2){
+                    p.ui.comN=0;
+                }
+            } else if (code == KeyEvent.VK_ENTER){
+                if(p.ui.comN==0){
+                    p.gameState=p.playState;
+                }
+                if (p.ui.comN==1){
+                    p.gameState=p.helpState;
 
-      else if (code == KeyEvent.VK_A) {
-         leftPressed = true;
-      }
+                }
+                if (p.ui.comN==2){
+                    System.exit(0);
+                }
 
-      else if (code == KeyEvent.VK_D) {
-         rightPressed = true;
-      }
-      else if (code == KeyEvent.VK_SPACE){
-         spacePressed = true;
-      }
+            }
+
+        } else if (p.gameState==p.helpState) {
+            if(code ==KeyEvent.VK_ESCAPE){
+                p.gameState=p.menuState;
+            }
+
+        } else if (p.gameState == p.playState) {
+            if(code ==KeyEvent.VK_ESCAPE){
+                System.exit(0);
+            }
+
+            if (code == KeyEvent.VK_W) {
+                upPressed = true;
+            } else if (code == KeyEvent.VK_S) {
+                downPressed = true;
+            } else if (code == KeyEvent.VK_A) {
+                leftPressed = true;
+            } else if (code == KeyEvent.VK_D) {
+                rightPressed = true;
+            } else if (code == KeyEvent.VK_SPACE) {
+                spacePressed = true;
+            }
+
+            if (code == KeyEvent.VK_P) {
+                if (p.gameState == p.playState) {
+                    p.gameState = p.pauseState;
+                }
+            }
+        } else if(p.gameState==p.pauseState){
+            if (code == KeyEvent.VK_P){
+                 if (p.gameState == p.pauseState) {
+                    p.gameState = p.playState;
+                }
+            }
+        }
     }
 
     @Override
@@ -62,5 +109,8 @@ public class KeyInput implements KeyListener {
       }
     }
     }
+
+
+
 
 
