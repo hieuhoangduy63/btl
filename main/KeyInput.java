@@ -42,6 +42,7 @@ public class KeyInput implements KeyListener  {
                     p.ui.comN=2;
 
                 }
+            }
             } else if (code == KeyEvent.VK_S) {
                 p.ui.comN++;
                 if(p.ui.comN>2){
@@ -66,7 +67,8 @@ public class KeyInput implements KeyListener  {
                 p.gameState=p.menuState;
             }
 
-        } else if (p.gameState == p.playState) {
+        } 
+        else if (p.gameState == p.playState) {
             if(code ==KeyEvent.VK_ESCAPE){
                 System.exit(0);
             }
@@ -88,7 +90,8 @@ public class KeyInput implements KeyListener  {
                     p.gameState = p.pauseState;
                 }
             }
-        } else if(p.gameState==p.pauseState){
+        } 
+        else if(p.gameState==p.pauseState){
             if (code == KeyEvent.VK_P){
                  if (p.gameState == p.pauseState) {
                     p.gameState = p.playState;

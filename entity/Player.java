@@ -2,11 +2,11 @@ package entity;
 import javax.swing.ImageIcon;
 import main.KeyInput;
 import main.Panel;
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Player extends Sprite {
     private ImageIcon playerImage;
+    private ImageIcon playerImageGETHIT;
     Panel p;
     KeyInput kIP;
     //phương thức khởi tạo
@@ -14,15 +14,16 @@ public class Player extends Sprite {
         this.p=p;
         this.kIP=kIP;
         setDefaultValue();
-        playerImage = new ImageIcon(getClass().getResource("/Image/SpaceShip.gif"));
+        playerImage = new ImageIcon(getClass().getResource("/Image/SpaceShip.png"));
+        playerImageGETHIT = new ImageIcon(getClass().getResource("/Image/SpaceShipGETHIT.png"));
     }
     //vị trí ban đầu và tốc độ người chơi
     public void setDefaultValue(){
         x=326;
         y=600;
         speed=5;
-        width=24;
-        height=24;
+        width=40;
+        height=40;
     }
     //cập nhật và vẽ hình ảnh
     public void update(){
@@ -35,19 +36,17 @@ public class Player extends Sprite {
     }
     //Trạng thái màu sắc của player
     public void draw(Graphics2D g2) {
-        //khi bất tử
-        if (isInvincible) {
-            long elapsed = (System.currentTimeMillis() - lastHitTime) % 500; // Thay đổi màu sắc mỗi 0.5 giây
-            if (elapsed < 250) {
-                g2.setColor(Color.WHITE); // Màu trắng nửa đầu
-            } else {
-                g2.setColor(Color.RED); // Màu đỏ nửa sau
+        if (isInvincible()) {
+            long elapsed = (System.currentTimeMillis() - lastHitTime) % 250; // Thay đổi màu sắc mỗi 0.25 giây
+            if (elapsed < 125) {
+                g2.drawImage(playerImage.getImage(), x-35, y-35, null); // Vẽ hình ảnh bình thường
+            }
+            else{
+                g2.drawImage(playerImageGETHIT.getImage(), x-35, y-35, null);
             }
         } else {
-        //khi bình thường
-            g2.setColor(Color.WHITE);
+            g2.drawImage(playerImage.getImage(), x-35, y-35, null); // Vẽ hình ảnh bình thường
         }
-        g2.drawImage(playerImage.getImage(), x, y, null);
     }
     //Khởi tạo mạng
     private int life = 3; // Số mạng ban đầu
@@ -57,7 +56,7 @@ public class Player extends Sprite {
 
     public boolean isInvincible = false; // Trạng thái bất tử tạm thời
     public long lastHitTime; // Thời gian lần cuối bị trúng đạn
-    public long invincibilityDuration = 2000; // Thời gian bất tử tạm thời (2 giây)
+    public long invincibilityDuration = 1000; // Thời gian bất tử tạm thời (2 giây)
 
     public boolean isInvincible() {
         return isInvincible;

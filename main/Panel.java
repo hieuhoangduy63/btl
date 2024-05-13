@@ -112,7 +112,7 @@ public void run() {
     public void checkDestroyed(){
         for(int i=3;i>=0;i--){
             for(int j=0;j<6;j++){
-                if(bom.x+bom.width>=alien[i][j].x&&bom.x<=alien[i][j].x+alien[i][j].width&&bom.y<=alien[i][j].y+alien[i][j].height){
+                if(bom.x+bom.width>=alien[i][j].x && bom.x<=alien[i][j].x+alien[i][j].width && bom.y<=alien[i][j].y+alien[i][j].height && bom.y+bom.height>=alien[i][j].y){
                     alien[i][j].destroyed=true;
                     bom.alive=false;
                     bom.destroyed=true;
