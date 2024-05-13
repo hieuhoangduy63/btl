@@ -11,8 +11,8 @@ public class Bullet extends Sprite {
         this.x = x;
         this.y = y;
         speed = 5;
-        width = 4;
-        height = 8;
+        width = 5;
+        height = 9;
         alive = true;
     }
 
@@ -32,7 +32,7 @@ public class Bullet extends Sprite {
     public void draw(Graphics2D g2) {
         if (alive) {
             g2.setColor(Color.GREEN);
-            g2.fillRect(x, y, width, height);
+            g2.fillRect(x-2, y-4, width, height);
         }
     }
 

@@ -68,7 +68,7 @@ public class Player extends Sprite {
     }
 
     public boolean isHit(Bullet bullet) {
-        return (bullet.x + bullet.width >= x && bullet.x <= x + width &&
+        return (bullet.x + bullet.width >= x-20 && bullet.x <= x-20 + width &&
                 bullet.y + bullet.height >= y && bullet.y <= y + height);
     }
     public void loseLife() {

@@ -21,14 +21,14 @@ public class Bomb extends Sprite {
     public void setDefaultValue(){
         this.x=2000;
         this.y=2000;
-        speed=10;
-        this.width=8;
-        this.height=16;
+        speed=15;
+        this.width=4;
+        this.height=8;
     }
     public void update(){
         if(kIP.spacePressed==true&&alive==false){
             alive=true;
-            x=p.player.x-3;
+            x=p.player.x-1;
             y=600;
         }
         else if(alive==true){

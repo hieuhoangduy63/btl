@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.*;
 
+import Background.BackgroundManager;
 import entity.Alien;
 import entity.Bomb;
 import entity.Bullet;
@@ -33,6 +34,9 @@ public class Panel extends JPanel implements Runnable {
     final int screenHight=700;
     final int screenWidth=700;
 
+    //Background
+    private BackgroundManager backgroundManager;
+
     //FPS
     int FPS=60;
     //Điểm số
@@ -57,6 +61,7 @@ public class Panel extends JPanel implements Runnable {
     Panel(){
         this.setPreferredSize(new Dimension(screenWidth,screenHight));
         this.setBackground(Color.black);
+        backgroundManager = new BackgroundManager(screenHight);
         this.setDoubleBuffered(true);
         this.setFocusable(true);
     }
@@ -82,7 +87,6 @@ public void run() {
         delta += (double) (currentTime - lastTime) / drawInterval;
         timer += currentTime - lastTime;
         lastTime = currentTime;
-
         if (delta >= 1.0D) {
             this.update();
             this.repaint();
@@ -138,6 +142,7 @@ public void run() {
 
         if (gameState == playState) {
         player.update();
+        backgroundManager.update();
         checkDestroyed();
         for(int i=0;i<4;i++){
             for(int j=0;j<6;j++){
@@ -162,6 +167,8 @@ public void run() {
                 ui.drawPauseScreen(g2);
             }
             if (gameState ==playState){
+        // Vẽ background
+        backgroundManager.draw(g2);
         //vẽ nhân vật
         player.draw(g2);
         //vẽ quái
