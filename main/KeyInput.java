@@ -31,6 +31,17 @@ public class KeyInput implements KeyListener  {
                     p.ui.comN=2;
 
                 }
+            } else if (code == KeyEvent.VK_DOWN) {
+                p.ui.comN++;
+                if(p.ui.comN>2){
+                    p.ui.comN=0;
+                }
+                if (code == KeyEvent.VK_UP) {
+                p.ui.comN--;
+                if(p.ui.comN<0){
+                    p.ui.comN=2;
+
+                }
             } else if (code == KeyEvent.VK_S) {
                 p.ui.comN++;
                 if(p.ui.comN>2){
