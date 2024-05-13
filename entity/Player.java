@@ -1,11 +1,12 @@
 package entity;
-
+import javax.swing.ImageIcon;
 import main.KeyInput;
 import main.Panel;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Player extends Sprite {
+    private ImageIcon playerImage;
     Panel p;
     KeyInput kIP;
     //phương thức khởi tạo
@@ -13,6 +14,7 @@ public class Player extends Sprite {
         this.p=p;
         this.kIP=kIP;
         setDefaultValue();
+        playerImage = new ImageIcon(getClass().getResource("/Image/SpaceShip.gif"));
     }
     //vị trí ban đầu và tốc độ người chơi
     public void setDefaultValue(){
@@ -45,7 +47,7 @@ public class Player extends Sprite {
         //khi bình thường
             g2.setColor(Color.WHITE);
         }
-        g2.fillRect(x, y, width, height);
+        g2.drawImage(playerImage.getImage(), x, y, null);
     }
     //Khởi tạo mạng
     private int life = 3; // Số mạng ban đầu
