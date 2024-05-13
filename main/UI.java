@@ -16,7 +16,7 @@ public class UI {
         this.p = p;
 
         try {
-            InputStream is = getClass().getResourceAsStream("/Font/x12y16pxMaruMonica.ttf");
+            InputStream is = getClass().getResourceAsStream("/x12y16pxMaruMonica.ttf");
             marunMonica = Font.createFont(Font.TRUETYPE_FONT, is);
         } catch (IOException e) {
             throw new RuntimeException(e);
