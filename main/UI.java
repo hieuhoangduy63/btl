@@ -10,7 +10,7 @@ public class UI {
     Font PublicP;
     Font maruM;
     double playTime;
-    DecimalFormat dFormat = new DecimalFormat("#0.00");
+    DecimalFormat dFormat = new DecimalFormat("#0.0");
     public int comN=0;
     Graphics2D g2;
 
@@ -41,11 +41,11 @@ public class UI {
         }else if (p.gameState == p.playState) {
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN,24F));
             g2.setColor(Color.white);
-            g2.drawString("Score: " + p.score, 20, 50);
-            if (p.score < 24) {
+            g2.drawString("Score:" + p.score, 20, 50);
+            if (p.score < 48) {
                 playTime += (double) 1 / 60;
             }
-            g2.drawString("Time: " + dFormat.format(playTime), 450, 50);
+            g2.drawString("Time:" + dFormat.format(playTime), 450, 50);
         }
     }
 

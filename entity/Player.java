@@ -22,8 +22,9 @@ public class Player extends Sprite {
         x=326;
         y=600;
         speed=5;
-        width=40;
-        height=40;
+        width=60;
+        height=35;
+        alive=true;
     }
     //cập nhật và vẽ hình ảnh
     public void update(){
@@ -39,17 +40,17 @@ public class Player extends Sprite {
         if (isInvincible()) {
             long elapsed = (System.currentTimeMillis() - lastHitTime) % 250; // Thay đổi màu sắc mỗi 0.25 giây
             if (elapsed < 125) {
-                g2.drawImage(playerImage.getImage(), x-35, y-35, null); // Vẽ hình ảnh bình thường
+                g2.drawImage(playerImage.getImage(), x-9, y-22, null); // Vẽ hình ảnh bình thường
             }
             else{
-                g2.drawImage(playerImageGETHIT.getImage(), x-35, y-35, null);
+                g2.drawImage(playerImageGETHIT.getImage(), x-9, y-22, null);
             }
         } else {
-            g2.drawImage(playerImage.getImage(), x-35, y-35, null); // Vẽ hình ảnh bình thường
+            g2.drawImage(playerImage.getImage(), x-9, y-22, null); // Vẽ hình ảnh bình thường
         }
     }
     //Khởi tạo mạng
-    private int life = 3; // Số mạng ban đầu
+    public int life = 3; // Số mạng ban đầu
     public int getLife() {
         return life;
     }
