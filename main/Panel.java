@@ -13,6 +13,7 @@ import entity.Alien;
 import entity.Bomb;
 import entity.Bullet;
 import entity.Player;
+import entity.Shield;
 
 public class Panel extends JPanel implements Runnable {
     //kiểm tra trạng thâi game
@@ -31,7 +32,7 @@ public class Panel extends JPanel implements Runnable {
     final int scale=3;
 
     //kích thước cửa sổ game
-    final int screenHight=700;
+    public final int screenHight=700;
     final int screenWidth=700;
 
     //Background
@@ -41,16 +42,18 @@ public class Panel extends JPanel implements Runnable {
     int FPS=60;
     //Điểm số
     int score=0;
+    public Boolean lv2=false;
     
     Setter set=new Setter(this);
     Thread gameThread;
     KeyInput KIP=new KeyInput(this);
     public Player player=new Player(this,KIP);
     public UI ui=new UI(this);
-    //khai báo và khởi tạo quái
-    Alien[][] alien=new Alien[4][6];
-
+    //khai báo và khởi tạo quái,khiên,bom
+    public Alien[][] alien=new Alien[4][6];
     Bomb bom = new Bomb(this,KIP);
+    Bullet[] bullet=new Bullet[5];
+    Shield[][] shield=new Shield[2][3];
    // Trang thai game
     public int gameState =0;
     public final int playState = 1;
@@ -73,7 +76,10 @@ public class Panel extends JPanel implements Runnable {
 
     public void setUpGame(){
         set.setAlien();
+        set.setShield();
+        set.setBullet();
         gameState = menuState;
+        
     }
     @Override
 public void run() {
@@ -112,20 +118,57 @@ public void run() {
             g2.drawRect(livesX + i * livesWidth, livesY, livesWidth, livesHeight);
         }
     }
-    //kiểm tra xem có trúng quái không
+    //kiểm tra đạn có trúng không
     public void checkDestroyed(){
+        long currentTime = System.currentTimeMillis();
+        //check trúng quái
         for(int i=3;i>=0;i--){
             for(int j=0;j<6;j++){
-                if(bom.x+bom.width>=alien[i][j].x && bom.x<=alien[i][j].x+alien[i][j].width && bom.y<=alien[i][j].y+alien[i][j].height && bom.y+bom.height>=alien[i][j].y){
-                    alien[i][j].destroyed=true;
-                    bom.alive=false;
+                if(bom.x+bom.width>=alien[i][j].x&&bom.x<=alien[i][j].x+alien[i][j].width&&bom.y<=alien[i][j].y+alien[i][j].height){
+                    alien[i][j].alive=false;
                     bom.destroyed=true;
                     score++;
                     bom.setDefaultValue();
                 }
+                if(score==24&&lv2==false){
+                    set.setAlien();
+                    lv2=true;
+                }
             }
         }
-    }
+        //check trúng người chơi
+        for(int i=0;i<5;i++){
+            if(bullet[i].x+bullet[i].width>=player.x&&bullet[i].x<=player.x+player.width&&bullet[i].y+bullet[i].height>=player.y
+                &&bullet[i].y<=player.y+player.height&&!player.isInvincible()){
+                    player.loseLife();
+                    if(player.life==0){
+                        player.alive=false;
+                    }
+            }
+            else if (player.isInvincible() && currentTime - player.lastHitTime > player.invincibilityDuration) {
+                player.isInvincible = false; // Kết thúc trạng thái bất tử tạm thời
+            }
+        }
+            //check trúng khiên
+            for(int i=1;i>=0;i--){
+                for(int j=0;j<3;j++){
+                    if(bom.x+bom.width>=shield[i][j].x&&bom.x<=shield[i][j].x+shield[i][j].width&&bom.y<=shield[i][j].y+shield[i][j].height){
+                        shield[i][j].alive=false;
+                        bom.setDefaultValue();
+                    }
+                }
+            }
+            for(int i=1;i>=0;i--){
+                for(int j=0;j<3;j++){
+                    for(int k=0;k<5;k++){
+                    if(bullet[k].x+bullet[k].width>=shield[i][j].x&&bullet[k].x<=shield[i][j].x+shield[i][j].width&&bullet[k].y+bullet[k].height>=shield[i][j].y){
+                        bullet[k].setDefaultValue();
+                }
+            }
+                }
+            }
+            
+        }
     
     
     //Thay đổi vị trí nhân vật và quái,bom
@@ -142,16 +185,24 @@ public void run() {
 
         if (gameState == playState) {
         player.update();
-        backgroundManager.update();
         checkDestroyed();
         for(int i=0;i<4;i++){
             for(int j=0;j<6;j++){
                 alien[i][j].update();
             }
         }
+        for(int i=0;i<2;i++){
+            for(int j=0;j<3;j++){
+                shield[i][j].update();
+            }
+        }
         bom.update();
-        checkPlayerHit(); // Gọi phương thức kiểm tra trúng đạn
-    }
+        if(ui.playTime>2){
+        for(int i=0;i<5;i++){
+        bullet[i].update();}
+    
+        
+        }}
     }
     //vẽ nhân vật và quái,bom lên màn hình
         public void paintComponent(Graphics g){
@@ -170,23 +221,26 @@ public void run() {
         // Vẽ background
         backgroundManager.draw(g2);
         //vẽ nhân vật
-        player.draw(g2);
+        if(player.alive==true){
+        player.draw(g2);}
         //vẽ quái
         for(int i=0;i<4;i++){
             for(int j=0;j<6;j++){
                 alien[i][j].draw(g2);
             }
         }
+        //vẽ khiên
+        for(int i=0;i<2;i++){
+            for(int j=0;j<3;j++){
+                shield[i][j].draw(g2);
+            }
+        }
         //vẽ bom
         bom.draw(g2);
         
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 6; j++) {
-                for (Bullet bullet : alien[i][j].getBullets()) {
-                    bullet.draw(g2);
-                }
-            }
-        }
+        for(int i=0;i<5;i++){
+        bullet[i].draw(g2);
+    }
         //in điểm số
         ui.draw(g2);
         
@@ -194,22 +248,5 @@ public void run() {
         drawLives(g2);
         
         g2.dispose();}
-    }
-    //kiểm tra xem có bị trúng đạn không
-    public void checkPlayerHit() {
-        long currentTime = System.currentTimeMillis();
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 6; j++) {
-                for (Bullet bullet : alien[i][j].getBullets()) {
-                    if (bullet.isAlive() && !player.isInvincible() && player.isHit(bullet)) {
-                        player.loseLife();
-                        bullet.setAlive(false);
-                        break;
-                    } else if (player.isInvincible() && currentTime - player.lastHitTime > player.invincibilityDuration) {
-                        player.isInvincible = false; // Kết thúc trạng thái bất tử tạm thời
-                    }
-                }
-            }
-        }
     }
 }

@@ -14,6 +14,7 @@ public class Sound implements Runnable{
       public Sound(Panel p){
         this.p=p;
         soundURL[0]=getClass().getResource("/sound/destruction.wav");
+        soundURL[1]=getClass().getResource("/sound/deathSound.wav");
       }
 
       public void setFile(int i){
@@ -56,6 +57,11 @@ public class Sound implements Runnable{
               setFile(0);
               play();
               p.bom.destroyed=false;
+            }
+            if(p.player.alive==false){
+              setFile(1);
+              play();
+              p.player.alive=true;
             }
             --delta;
             ++drawCount;
