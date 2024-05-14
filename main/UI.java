@@ -39,13 +39,13 @@ public class UI {
             drawPauseScreen(g2);
 
         }else if (p.gameState == p.playState) {
-            g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32F));
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN,24F));
             g2.setColor(Color.white);
             g2.drawString("Score: " + p.score, 20, 50);
             if (p.score < 24) {
                 playTime += (double) 1 / 60;
             }
-            g2.drawString("Time: " + dFormat.format(playTime), 530, 50);
+            g2.drawString("Time: " + dFormat.format(playTime), 450, 50);
         }
     }
 
