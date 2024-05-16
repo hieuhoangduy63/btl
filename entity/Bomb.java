@@ -18,7 +18,6 @@ public class Bomb extends Sprite {
         this.kIP=kIP;
         setDefaultValue();
     }
-
     public void setDefaultValue(){
         this.x=2000;
         this.y=2000;

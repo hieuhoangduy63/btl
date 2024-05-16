@@ -9,6 +9,7 @@ import main.Panel;
 public class Bullet extends Sprite {
     Panel p;
     public double countDown=0;
+    public int index;
     public Bullet (Panel p){
         this.p=p;
         setDefaultValue();
@@ -37,6 +38,38 @@ public class Bullet extends Sprite {
         }
         if(y>=700){setDefaultValue();}
         if(p.lv2==true){speed=8;}
+        countDown-=1;
+    }
+    public void update_lv3(){
+        if(alive==false&&countDown<=0){
+            alive=true;
+            x=p.boss.x+p.boss.width/2-width/2;
+            y=p.boss.y+p.boss.height-height;;
+            countDown=60;
+        }
+        else if(alive==true){
+            if(index==0){
+                x-=5;
+                y+=8;
+            }
+            else if(index==1){
+                x-=7;
+                y+=7;
+            }
+            else if(index==2){
+                y+=10;
+            }
+            else if(index==3){
+                x+=7;
+                y+=7;
+            }
+            else if(index==4){
+                x+=5;
+                y+=8;
+            }
+            
+        }
+        if(y>=700){setDefaultValue();}
         countDown-=1;
     }
     public void draw(Graphics2D g2){
