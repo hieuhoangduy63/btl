@@ -29,7 +29,7 @@ public class Setter {
      public void setShield(){
          for(int i=0;i<2;i++){
             for(int j=0;j<3;j++){
-            p.shield[i][j]=new Shield(j*96+103*(j+1),i*16+500);
+            p.shield[i][j]=new Shield(j*96+103*(j+1),i*8+500);
      }}
      
      }

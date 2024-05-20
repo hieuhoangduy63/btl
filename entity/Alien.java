@@ -30,12 +30,12 @@ public class Alien extends Sprite {
             for(int j=0;j<6;j++){
                 p.alien[i][j].sangphai = !p.alien[i][j].sangphai;
                 if(p.alien[i][j].sangphai){
-                    p.alien[i][j].x -= speed; // change direction of x
+                    p.alien[i][j].x -= speed; // đi sang phải
                 } else {
-                    p.alien[i][j].x += speed; // change direction of x
+                    p.alien[i][j].x += speed; // di sang trái
                 }
                 p.alien[i][j].y += 15;
-                if(p.alien[i][j].y >= p.player.y) {
+                if(p.alien[i][j].y >= 450) {
                     p.setGameOver(true); // Đặt trạng thái trò chơi thành kết thúc
                 }
             }
@@ -62,12 +62,14 @@ public class Alien extends Sprite {
         }
         if(p.lv2==true){speed=2;}
     }
+    
     public void draw(Graphics2D g2){
         if(alive==true){
         alienSkin1 = new ImageIcon(getClass().getResource("/Image/AlienSkin1.gif"));
         g2.drawImage(alienSkin1.getImage(), x, y, null);
         }
     }
+
 }
 
 

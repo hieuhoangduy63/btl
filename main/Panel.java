@@ -240,7 +240,7 @@ public void run() {
         for(int i=0;i<5;i++){
             bullet[i].update_lv3();}
     }
-}
+    }
     }
     //vẽ nhân vật và quái,bom lên màn hình
         public void paintComponent(Graphics g){
@@ -258,6 +258,7 @@ public void run() {
             if (gameState ==playState){
         // Vẽ background
         backgroundManager.draw(g2);
+        backgroundManager.update();
         //vẽ nhân vật
         if(player.alive==true){
         player.draw(g2);}
@@ -279,7 +280,7 @@ public void run() {
         for(int i=0;i<5;i++){
         if(bullet[i].alive==true){
         bullet[i].draw(g2);}
-    }
+        }
         //vẽ boss
         if(boss.alive=true){
             boss.draw(g2);

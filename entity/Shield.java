@@ -11,7 +11,7 @@ public class Shield extends Sprite {
     }
     public void setDefaultValue(){
         width=96;
-        height=16;
+        height=8;
         alive=true;
     }
     public void update(){
