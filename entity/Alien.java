@@ -25,23 +25,40 @@ public class Alien extends Sprite {
         height=32;
         alive=true;
     }
+    public void changeDirection() {
+        for(int i=0;i<4;i++){
+            for(int j=0;j<6;j++){
+                p.alien[i][j].sangphai = !p.alien[i][j].sangphai;
+                if(p.alien[i][j].sangphai){
+                    p.alien[i][j].x -= 10; // change direction of x
+                } else {
+                    p.alien[i][j].x += 10; // change direction of x
+                }
+                p.alien[i][j].y += 15;
+                if(p.alien[i][j].y >= p.player.y) {
+                    p.setGameOver(true); // Đặt trạng thái trò chơi thành kết thúc
+                }
+            }
+        }
+    }
+    
     public void update(){
         if(alive){
-        if(x<(x0+50)&&sangphai==true){
-        x+=speed;}
-        else if(x>=(x0+50)){
-            x-=speed;
-            sangphai=false;
-        }
-        else if(x>(x0-50)&&(sangphai==false)){
-            x-=speed;
-        }
-        else if(x<=(x0-50)){
-            sangphai=true;
-        }}
+            if(sangphai){
+                x += speed;
+                if(x >= p.getWidth() - width) {
+                    changeDirection();
+                }
+            } else {
+                x -= speed;
+                if(x <= 0) {
+                    changeDirection();
+                }
+            } 
+        } 
         else{
-            x=1000;
-            y=1000;
+            x=-1000;
+            y=-1000;
         }
         if(p.lv2==true){speed=2;}
     }
@@ -52,3 +69,5 @@ public class Alien extends Sprite {
         }
     }
 }
+
+
