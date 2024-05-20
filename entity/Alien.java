@@ -1,11 +1,10 @@
 package entity;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 
+import java.awt.Graphics2D;
 import main.Panel;
 import javax.swing.ImageIcon;
-import javax.swing.*;
+
 
 
 public class Alien extends Sprite {
