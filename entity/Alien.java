@@ -30,9 +30,9 @@ public class Alien extends Sprite {
             for(int j=0;j<6;j++){
                 p.alien[i][j].sangphai = !p.alien[i][j].sangphai;
                 if(p.alien[i][j].sangphai){
-                    p.alien[i][j].x -= 10; // change direction of x
+                    p.alien[i][j].x -= speed; // change direction of x
                 } else {
-                    p.alien[i][j].x += 10; // change direction of x
+                    p.alien[i][j].x += speed; // change direction of x
                 }
                 p.alien[i][j].y += 15;
                 if(p.alien[i][j].y >= p.player.y) {
