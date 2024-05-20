@@ -1,9 +1,11 @@
 package main;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
+import javax.swing.ImageIcon;
 
 public class UI {
     Panel p;
@@ -13,6 +15,7 @@ public class UI {
     DecimalFormat dFormat = new DecimalFormat("#0.0");
     public int comN=0;
     Graphics2D g2;
+    private ImageIcon backgroundMenuS;
 
     public UI(Panel p) {
         this.p = p;
@@ -51,9 +54,11 @@ public class UI {
 
     // ve menu
     public void drawMenuS(Graphics2D g2) {
+        backgroundMenuS = new ImageIcon(getClass().getResource("/Image/backgroundMenuS.jpg"));
         g2.setFont(PublicP);
         g2.setColor(Color.white);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,30F));
+        g2.drawImage(backgroundMenuS.getImage(), 0, 0, null);
 
         // Vẽ tiêu đề
         String titleText = "STAR WAR GAME";
