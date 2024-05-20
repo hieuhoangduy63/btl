@@ -11,12 +11,14 @@ import javax.swing.*;
 import Background.BackgroundManager;
 import entity.Alien;
 import entity.Bomb;
+import entity.Boss;
+import entity.BossHP;
 import entity.Bullet;
 import entity.Player;
 import entity.Shield;
 
 public class Panel extends JPanel implements Runnable {
-    //kiểm tra trạng thâi game
+    //kiểm tra trạng thái game
     private boolean isGameOver = false;
 
     public boolean isGameOver() {
@@ -33,7 +35,7 @@ public class Panel extends JPanel implements Runnable {
 
     //kích thước cửa sổ game
     public final int screenHight=700;
-    final int screenWidth=700;
+    public final int screenWidth=700;
 
     //Background
     private BackgroundManager backgroundManager;
@@ -43,6 +45,7 @@ public class Panel extends JPanel implements Runnable {
     //Điểm số
     int score=0;
     public Boolean lv2=false;
+    public Boolean lv3=false;
     
     Setter set=new Setter(this);
     Thread gameThread;
@@ -54,6 +57,8 @@ public class Panel extends JPanel implements Runnable {
     Bomb bom = new Bomb(this,KIP);
     Bullet[] bullet=new Bullet[5];
     Shield[][] shield=new Shield[2][3];
+    public Boss boss;
+    BossHP bosshp=new BossHP(this);
    // Trang thai game
     public int gameState =0;
     public final int playState = 1;
@@ -78,6 +83,8 @@ public class Panel extends JPanel implements Runnable {
         set.setAlien();
         set.setShield();
         set.setBullet();
+        set.setBoss();
+        set.setBullet_lv3();
         gameState = menuState;
         
     }
@@ -124,7 +131,7 @@ public void run() {
         //check trúng quái
         for(int i=3;i>=0;i--){
             for(int j=0;j<6;j++){
-                if(bom.x+bom.width>=alien[i][j].x&&bom.x<=alien[i][j].x+alien[i][j].width&&bom.y<=alien[i][j].y+alien[i][j].height){
+                if(bom.x+bom.width>=alien[i][j].x&&bom.x<=alien[i][j].x+alien[i][j].width&&bom.y<=alien[i][j].y+alien[i][j].height&&bom.y+bom.height>=alien[i][j].y){
                     alien[i][j].alive=false;
                     bom.destroyed=true;
                     score++;
@@ -134,6 +141,13 @@ public void run() {
                     set.setAlien();
                     lv2=true;
                 }
+               if(score==48&&lv3==false){
+                
+                    lv2=false;
+                    set.setBoss();
+                    boss.x=screenWidth/2-boss.width/2;
+                    boss.y=100;
+                    lv3=true;}
             }
         }
         //check trúng người chơi
@@ -141,11 +155,16 @@ public void run() {
             if(bullet[i].x+bullet[i].width>=player.x&&bullet[i].x<=player.x+player.width&&bullet[i].y+bullet[i].height>=player.y
                 &&bullet[i].y<=player.y+player.height&&!player.isInvincible()){
                     player.loseLife();
+                    bullet[i].alive=false;
                     if(player.life==0){
                         player.alive=false;
                     }
             }
-            else if (player.isInvincible() && currentTime - player.lastHitTime > player.invincibilityDuration) {
+            else if(bullet[i].x+bullet[i].width>=player.x&&bullet[i].x<=player.x+player.width&&bullet[i].y+bullet[i].height>=player.y
+            &&bullet[i].y<=player.y+player.height&&player.isInvincible()){
+                bullet[i].alive=false;
+            }
+            if (player.isInvincible() && currentTime - player.lastHitTime > player.invincibilityDuration) {
                 player.isInvincible = false; // Kết thúc trạng thái bất tử tạm thời
             }
         }
@@ -167,6 +186,20 @@ public void run() {
             }
                 }
             }
+            //check trúng boss
+                if(bom.x+bom.width>=boss.x&&bom.x<=boss.x+boss.width&&bom.y<=boss.y+boss.height&&bom.y+bom.height>=boss.y){
+                    boss.life--;
+                    bom.destroyed=true;
+                    bom.setDefaultValue();
+                    score++;
+                    if(score==73){
+                        boss.alive=false;
+                        boss.x=1000;
+                        boss.y=1000;
+
+                    }
+                }
+
             
         }
     
@@ -197,12 +230,17 @@ public void run() {
             }
         }
         bom.update();
-        if(ui.playTime>2){
+        boss.update();
+        bosshp.update();
+        if(ui.playTime>2&&lv3==false){
         for(int i=0;i<5;i++){
         bullet[i].update();}
-    
-        
-        }}
+    }   
+        else if(lv3==true){
+        for(int i=0;i<5;i++){
+            bullet[i].update_lv3();}
+    }
+}
     }
     //vẽ nhân vật và quái,bom lên màn hình
         public void paintComponent(Graphics g){
@@ -237,10 +275,17 @@ public void run() {
         }
         //vẽ bom
         bom.draw(g2);
-        
+        //vẽ bullet
         for(int i=0;i<5;i++){
-        bullet[i].draw(g2);
+        if(bullet[i].alive==true){
+        bullet[i].draw(g2);}
     }
+        //vẽ boss
+        if(boss.alive=true){
+            boss.draw(g2);
+        }
+        //vẽ thanh hp boss
+        bosshp.draw(g2);
         //in điểm số
         ui.draw(g2);
         

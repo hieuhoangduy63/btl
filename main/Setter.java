@@ -1,6 +1,7 @@
 package main;
 
 import entity.Alien;
+import entity.Boss;
 import entity.Bullet;
 import entity.Shield;
 
@@ -28,7 +29,7 @@ public class Setter {
      public void setShield(){
          for(int i=0;i<2;i++){
             for(int j=0;j<3;j++){
-            p.shield[i][j]=new Shield(j*96+103*(j+1),i*16+450);
+            p.shield[i][j]=new Shield(j*96+103*(j+1),i*16+500);
      }}
      
      }
@@ -38,4 +39,17 @@ public class Setter {
          p.bullet[i]=new Bullet(p);
       }
   }
+      public void setBullet_lv3(){
+      for(int i=0;i<5;i++){
+      p.bullet[i]=new Bullet(p);
+      p.bullet[i].index=i;
+      p.bullet[i].x=p.boss.x+p.boss.width/2-p.bullet[i].width/2;
+      p.bullet[i].y=p.boss.y+p.boss.height-p.bullet[i].height;
+   } 
+}
+     //cài vị trí ban đầu của boss
+      public void setBoss(){
+      p.boss=new Boss(p);
+      
+    }
 }
