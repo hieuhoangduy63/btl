@@ -41,9 +41,12 @@ public class Panel extends JPanel implements Runnable {
     private BackgroundManager backgroundManager;
 
     //FPS
-    int FPS=60;
+    int FPS= 60;
     //Điểm số
     int score=0;
+    public void ResetScore(){
+        score = 0;
+    }
     public Boolean lv2=false;
     public Boolean lv3=false;
     
@@ -65,6 +68,7 @@ public class Panel extends JPanel implements Runnable {
     public final int menuState= 0;
     public final int helpState=2;
     public final int pauseState=3;
+    public final int gameOverState = 4;
 
     Panel(){
         this.setPreferredSize(new Dimension(screenWidth,screenHight));
@@ -86,7 +90,18 @@ public class Panel extends JPanel implements Runnable {
         set.setBoss();
         set.setBullet_lv3();
         gameState = menuState;
-        
+    }
+    public void ResetGame(){
+        ui.playTime = 0;
+        player.life = 3;
+        player.alive = true;
+        setGameOver(false);
+        set.setAlien();
+        set.setShield();
+        set.setBullet();
+        set.setBoss();
+        set.setBullet_lv3();
+        ResetScore();
     }
     @Override
 public void run() {
@@ -95,7 +110,7 @@ public void run() {
     long lastTime = System.nanoTime();
     long timer = 0L;
 
-    while (this.gameThread != null && !isGameOver) { // Thêm điều kiện !isGameOver
+    while (this.gameThread != null ) { // Thêm điều kiện !isGameOver - Phải bỏ điều kiện !isGameOver đi thì GameOverScreen mới chạy
         long currentTime = System.nanoTime();
         delta += (double) (currentTime - lastTime) / drawInterval;
         timer += currentTime - lastTime;
@@ -158,6 +173,7 @@ public void run() {
                     bullet[i].alive=false;
                     if(player.life==0){
                         player.alive=false;
+                        gameState = gameOverState;
                     }
             }
             else if(bullet[i].x+bullet[i].width>=player.x&&bullet[i].x<=player.x+player.width&&bullet[i].y+bullet[i].height>=player.y
@@ -254,6 +270,9 @@ public void run() {
             }
             if(gameState==pauseState){
                 ui.drawPauseScreen(g2);
+            }
+            if (gameState == gameOverState) {
+                ui.drawGameOverScreen(g2);
             }
             if (gameState ==playState){
         // Vẽ background

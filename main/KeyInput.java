@@ -90,6 +90,9 @@ public class KeyInput implements KeyListener  {
                     p.gameState = p.pauseState;
                 }
             }
+            if (code == KeyEvent.VK_NUMPAD0){
+                p.gameState = p.gameOverState; // For debugging purpose
+            }
         } 
         else if(p.gameState==p.pauseState){
             if (code == KeyEvent.VK_P){
@@ -98,8 +101,28 @@ public class KeyInput implements KeyListener  {
                 }
             }
         }
+        else if (p.gameState == p.gameOverState) {
+            if (code == KeyEvent.VK_D || code == KeyEvent.VK_A ) {
+                if (p.ui.comN == 0) {
+                    p.ui.comN = 1;
+                }
+                else if (p.ui.comN == 1) {
+                    p.ui.comN = 0;
+                }
+            }
+            if (code == KeyEvent.VK_ENTER) {
+                if (p.ui.comN == 0) {
+                    p.ResetGame();
+                    p.gameState = p.playState;
+                }
+                if (p.ui.comN == 1) {
+                    p.ResetGame();
+                    p.ui.comN = 0;
+                    p.gameState = p.menuState;
+            }
+        }
     }
-
+}
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();

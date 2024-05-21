@@ -118,16 +118,48 @@ public class UI {
         g2.drawString(play4Text,20,30 );
 
         }
-        public void drawPauseScreen(Graphics2D g2){
-            g2.setColor(Color.WHITE);
-            g2.setFont(maruM);
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD,50F));
-            String titleText = "Pause";
+    public void drawPauseScreen(Graphics2D g2){
+        g2.setColor(Color.WHITE);
+        g2.setFont(maruM);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,50F));
+        String titleText = "Pause";
 
-            g2.drawString(titleText, 275, 350);
-        }
-
-
+        g2.drawString(titleText, 275, 350);
     }
+    public void drawGameOverScreen(Graphics2D g2) {
+        g2.setColor(Color.WHITE);
+        g2.setFont(maruM);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,50F));
+        String GameOverText = "You are dead";
+        int GameOverX = (p.screenWidth - g2.getFontMetrics().stringWidth(GameOverText)) / 2;
+        g2.drawString(GameOverText, GameOverX, 250);
+            
+        g2.setFont(maruM);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,40F));
+        g2.setColor(Color.WHITE);
+        String GameOverScore = String.format("Score: %d", p.score);
+        int GameOverScoreX = (p.screenWidth - g2.getFontMetrics().stringWidth(GameOverScore)) / 2;
+        g2.drawString(GameOverScore, GameOverScoreX, 300 );
+            
+        g2.setFont(maruM);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,30F));
+        g2.setColor(Color.WHITE);
+        String GameOverOption1 = "Try again";
+        int GameOverOptionX = (p.screenWidth / 4);
+        g2.drawString(GameOverOption1, GameOverOptionX, 400 );
+        if (comN == 0){
+            g2.drawString(">", GameOverOptionX - 20,400);
+        }
+        g2.setFont(maruM);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,30F));
+        g2.setColor(Color.WHITE);
+        String GameOverOption2 = "Go Back";
+        int GameOverOption2X = ((p.screenWidth / 4) * 3 - g2.getFontMetrics().stringWidth(GameOverOption2));
+        g2.drawString(GameOverOption2, GameOverOption2X, 400 );
+        if (comN == 1){
+            g2.drawString(">", GameOverOption2X -20 ,400);
+        }
+    }
+}
 
 
