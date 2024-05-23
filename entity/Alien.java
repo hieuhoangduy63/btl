@@ -60,7 +60,6 @@ public class Alien extends Sprite {
             x=-1000;
             y=-1000;
         }
-        if(p.lv2==true){speed=2;}
     }
     
     public void draw(Graphics2D g2){

@@ -12,6 +12,7 @@ public class Bullet extends Sprite {
     public int index;
     public Bullet (Panel p){
         this.p=p;
+        this.speed=4;
         setDefaultValue();
     }
 
@@ -20,7 +21,6 @@ public class Bullet extends Sprite {
         this.y=2000;
         this.width=8;
         this.height=16;
-        speed=4;
         this.alive=false;
     }
     public void update(){
@@ -31,13 +31,13 @@ public class Bullet extends Sprite {
             int value2=generator.nextInt(6);
             x=p.alien[value1][value2].x+12;
             y=p.alien[value1][value2].y+32;
+            speed=4+p.score*2/72;
             countDown=300/speed;
         }
         else if(alive==true){
             y+=speed;
         }
         if(y>=700){setDefaultValue();}
-        if(p.lv2==true){speed=8;}
         countDown-=1;
     }
     public void update_lv3(){
@@ -45,7 +45,7 @@ public class Bullet extends Sprite {
             alive=true;
             x=p.boss.x+p.boss.width/2-width/2;
             y=p.boss.y+p.boss.height-height;;
-            countDown=60;
+            countDown=p.screenHight/(speed*2);
         }
         else if(alive==true){
             if(index==0){

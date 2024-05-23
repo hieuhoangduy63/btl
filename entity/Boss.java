@@ -12,7 +12,7 @@ public class Boss extends Sprite {
     public double countDown1=0;
     public double countDown2=0;
     public int change;
-    public int life=25;
+    public int life=24;
     Random generator=new Random();
     public Boss(Panel p){
         this.p=p;
