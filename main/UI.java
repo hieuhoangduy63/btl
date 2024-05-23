@@ -44,7 +44,7 @@ public class UI {
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN,24F));
             g2.setColor(Color.white);
             g2.drawString("Score:" + p.score, 20, 50);
-            if (p.score < 73) {
+            if (p.player.alive==true) {
                 playTime += (double) 1 / 60;
             }
             g2.drawString("Time:" + dFormat.format(playTime), 450, 50);

@@ -15,7 +15,7 @@ import entity.Boss;
 import entity.BossHP;
 import entity.Bullet;
 import entity.Player;
-import entity.Shield;
+
 
 public class Panel extends JPanel implements Runnable {
     //kiểm tra trạng thái game
@@ -43,10 +43,11 @@ public class Panel extends JPanel implements Runnable {
     //FPS
     int FPS= 60;
     //Điểm số
-    int score=0;
+    public int score=0;
     public void ResetScore(){
         score = 0;
     }
+    public Boolean lv1=true;
     public Boolean lv2=false;
     public Boolean lv3=false;
     
@@ -59,7 +60,6 @@ public class Panel extends JPanel implements Runnable {
     public Alien[][] alien=new Alien[4][6];
     Bomb bom = new Bomb(this,KIP);
     Bullet[] bullet=new Bullet[5];
-    Shield[][] shield=new Shield[2][3];
     public Boss boss;
     BossHP bosshp=new BossHP(this);
    // Trang thai game
@@ -85,7 +85,6 @@ public class Panel extends JPanel implements Runnable {
 
     public void setUpGame(){
         set.setAlien();
-        set.setShield();
         set.setBullet();
         set.setBoss();
         set.setBullet_lv3();
@@ -97,7 +96,6 @@ public class Panel extends JPanel implements Runnable {
         player.alive = true;
         setGameOver(false);
         set.setAlien();
-        set.setShield();
         set.setBullet();
         set.setBoss();
         set.setBullet_lv3();
@@ -152,14 +150,16 @@ public void run() {
                     score++;
                     bom.setDefaultValue();
                 }
-                if(score==24&&lv2==false){
-                    set.setAlien();
+                if(score%72==24&&lv2==false){
+                    set.setAlien_lv2();
                     lv2=true;
+                    lv1=false;
                 }
-               if(score==48&&lv3==false){
+                if(score%72==48&&lv3==false){
                 
                     lv2=false;
                     set.setBoss();
+                    boss.speed=(score/72+1)*2;
                     boss.x=screenWidth/2-boss.width/2;
                     boss.y=100;
                     lv3=true;}
@@ -184,35 +184,20 @@ public void run() {
                 player.isInvincible = false; // Kết thúc trạng thái bất tử tạm thời
             }
         }
-            //check trúng khiên
-            for(int i=1;i>=0;i--){
-                for(int j=0;j<3;j++){
-                    if(bom.x+bom.width>=shield[i][j].x&&bom.x<=shield[i][j].x+shield[i][j].width&&bom.y<=shield[i][j].y+shield[i][j].height){
-                        shield[i][j].alive=false;
-                        bom.setDefaultValue();
-                    }
-                }
-            }
-            for(int i=1;i>=0;i--){
-                for(int j=0;j<3;j++){
-                    for(int k=0;k<5;k++){
-                    if(bullet[k].x+bullet[k].width>=shield[i][j].x&&bullet[k].x<=shield[i][j].x+shield[i][j].width&&bullet[k].y+bullet[k].height>=shield[i][j].y){
-                        bullet[k].setDefaultValue();
-                }
-            }
-                }
-            }
+            
             //check trúng boss
                 if(bom.x+bom.width>=boss.x&&bom.x<=boss.x+boss.width&&bom.y<=boss.y+boss.height&&bom.y+bom.height>=boss.y){
                     boss.life--;
                     bom.destroyed=true;
                     bom.setDefaultValue();
                     score++;
-                    if(score==73){
+                    if(score%72==0&&lv1==false){
                         boss.alive=false;
                         boss.x=1000;
                         boss.y=1000;
-
+                        lv1=true;
+                        lv3=false;
+                        set.setAlien();
                     }
                 }
 
@@ -240,11 +225,7 @@ public void run() {
                 alien[i][j].update();
             }
         }
-        for(int i=0;i<2;i++){
-            for(int j=0;j<3;j++){
-                shield[i][j].update();
-            }
-        }
+
         bom.update();
         boss.update();
         bosshp.update();
@@ -287,12 +268,7 @@ public void run() {
                 alien[i][j].draw(g2);
             }
         }
-        //vẽ khiên
-        for(int i=0;i<2;i++){
-            for(int j=0;j<3;j++){
-                shield[i][j].draw(g2);
-            }
-        }
+        
         //vẽ bom
         bom.draw(g2);
         //vẽ bullet
