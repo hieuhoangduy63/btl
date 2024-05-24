@@ -13,6 +13,7 @@ public class Bomb extends Sprite {
     private ImageIcon bombImage;
     public double countDown=0;
     public Boolean destroyed=false;
+    public boolean shot=false;
 
     public boolean alive=false;
     public Bomb (Panel p,KeyInput kIP){
@@ -32,6 +33,7 @@ public class Bomb extends Sprite {
     public void update(){
         if(kIP.spacePressed==true&&alive==false&&countDown<=0){
             alive=true;
+            shot=true;
             x=p.player.x+26;
             y=600;
             countDown=p.screenHight/speed;
