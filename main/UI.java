@@ -15,7 +15,10 @@ public class UI {
     public int comN=0;
     Graphics2D g2;
     private ImageIcon backgroundMenuS;
+    private ImageIcon pauseBackground;
     private ImageIcon menuPointer;
+    private ImageIcon gameOverImage;
+    private ImageIcon helpBackground;
     public UI(Panel p) {
         this.p = p;
         try {
@@ -54,7 +57,7 @@ public class UI {
     // ve menu
     public void drawMenuS(Graphics2D g2) {
         menuPointer = new ImageIcon(getClass().getResource("/Image/menuPointer.png"));
-        backgroundMenuS = new ImageIcon(getClass().getResource("/Image/backgroundMenuS.jpg"));
+        backgroundMenuS = new ImageIcon(getClass().getResource("/Image/helpBackground.jpg"));
         g2.setFont(PublicP);
         g2.setColor(Color.white);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,30F));
@@ -96,6 +99,8 @@ public class UI {
     }
     // ve huong dan
     public void drawHelpScreen(Graphics2D g2) {
+        helpBackground = new ImageIcon(getClass().getResource("/Image/backgroundMenuS.jpg"));
+        g2.drawImage(helpBackground.getImage(), 0, 0, null);
         g2.setColor(Color.WHITE);
         g2.setFont(PublicP);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,50F));
@@ -120,14 +125,17 @@ public class UI {
 
         }
     public void drawPauseScreen(Graphics2D g2){
+        pauseBackground = new ImageIcon(getClass().getResource("/Image/pauseBackground.jpg"));
         g2.setColor(Color.WHITE);
         g2.setFont(maruM);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,50F));
         String titleText = "Pause";
-
+        g2.drawImage(pauseBackground.getImage(), 0, 0, null);
         g2.drawString(titleText, 275, 350);
     }
     public void drawGameOverScreen(Graphics2D g2) {
+        gameOverImage = new ImageIcon(getClass().getResource("/Image/gameOverImage.jpg"));
+        g2.drawImage(gameOverImage.getImage(), 0, 0, null);
         g2.setColor(Color.WHITE);
         g2.setFont(maruM);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,50F));

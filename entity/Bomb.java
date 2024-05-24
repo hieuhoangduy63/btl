@@ -3,12 +3,14 @@ package entity;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import main.Panel;
+import javax.swing.ImageIcon;
 
 import main.KeyInput;
 
 public class Bomb extends Sprite {
     Panel p;
     KeyInput kIP;
+    private ImageIcon bombImage;
     public double countDown=0;
     public Boolean destroyed=false;
 
@@ -17,6 +19,7 @@ public class Bomb extends Sprite {
         this.p=p;
         this.kIP=kIP;
         setDefaultValue();
+        bombImage = new ImageIcon(getClass().getResource("/Image/bombImage.png"));
     }
     public void setDefaultValue(){
         this.x=2000;
@@ -40,8 +43,7 @@ public class Bomb extends Sprite {
         countDown-=1;
     }
     public void draw(Graphics2D g2){
-        g2.setColor(Color.white);
-        g2.fillRect(x,y,width,height);
+        g2.drawImage(bombImage.getImage(), x, y, null);
     }
     
 }

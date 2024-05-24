@@ -130,10 +130,10 @@ public void run() {
     //Bộ đếm mạng
     public void drawLives(Graphics2D g2) {
          int livesX = 275;
-         int livesY = 25;
-         int livesWidth = 50;
+         int livesY = 20;
+         int livesWidth = 45;
          int livesHeight = 32;
-         livesImage = new ImageIcon(getClass().getResource("/Image/livesImage.png"));
+         livesImage = new ImageIcon(getClass().getResource("/Image/livesImage1.png"));
 
          for (int i = 0; i < player.getLife(); i++) {
              g2.drawImage(livesImage.getImage(), livesX + i*livesWidth, livesY, null);
