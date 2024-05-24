@@ -128,15 +128,12 @@ public class UI {
         g2.setFont(maruM);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,50F));
         String titleText = "Pause";
-<<<<<<< HEAD
+
         g2.drawImage(pauseBackground.getImage(), 0, 0, null);
-        g2.drawString(titleText, 275, 350);
-=======
         g2.drawString(titleText, 275, 250);
         String titleText1 = "B - Back to menu";
         g2.drawString(titleText1, 190, 320);
 
->>>>>>> 7227380afc8a02f1b000c3a22513ea7b2c67625a
     }
     public void drawGameOverScreen(Graphics2D g2) {
         gameOverImage = new ImageIcon(getClass().getResource("/Image/gameOverImage.jpg"));
