@@ -109,20 +109,18 @@ public class UI {
         g2.drawString(titleText, titleX, 100);
 
 
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,20F));
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,15F));
         g2.setColor(Color.WHITE);
-        String playText = "Move: A move left, D move right";
-        g2.drawString(playText,50,150 );
-        String play1Text = "Attack: Space";
-        g2.drawString(play1Text,50,190 );
-        String play2Text = "Pause Game: P";
-        g2.drawString(play2Text,50,230 );
-        String play3Text = "Exit Game:Esc";
-        g2.drawString(play3Text,50,270 );
+        int y=150;
+        String playText = "Control your ship to attack aliens\nTry to dodge their bullet because \nyou only have 3 lives\nEnemy will move faster with each round\nEvery 3 rounds the boss will appear\n\nA move left, D move right\nAttack:Space\nPause game:P\nExit game:ESC\n   ";
+        for (String line:playText.split("\n")){
+            g2.drawString(line,50,y);
+            y+=40;
+        }
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN,10F));
-        String play4Text = "- Return(Esc) -";
-        g2.drawString(play4Text,20,30 );
-
+        String play2Text = "- Return(Esc) -";
+        g2.drawString(play2Text,20,30 );
+      
         }
     public void drawPauseScreen(Graphics2D g2){
         pauseBackground = new ImageIcon(getClass().getResource("/Image/pauseBackground.jpg"));
@@ -130,8 +128,15 @@ public class UI {
         g2.setFont(maruM);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,50F));
         String titleText = "Pause";
+<<<<<<< HEAD
         g2.drawImage(pauseBackground.getImage(), 0, 0, null);
         g2.drawString(titleText, 275, 350);
+=======
+        g2.drawString(titleText, 275, 250);
+        String titleText1 = "B - Back to menu";
+        g2.drawString(titleText1, 190, 320);
+
+>>>>>>> 7227380afc8a02f1b000c3a22513ea7b2c67625a
     }
     public void drawGameOverScreen(Graphics2D g2) {
         gameOverImage = new ImageIcon(getClass().getResource("/Image/gameOverImage.jpg"));

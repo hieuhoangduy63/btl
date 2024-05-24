@@ -128,7 +128,9 @@ public void run() {
     }
 }
     //Bộ đếm mạng
+    private ImageIcon lifeIcon;
     public void drawLives(Graphics2D g2) {
+<<<<<<< HEAD
          int livesX = 275;
          int livesY = 20;
          int livesWidth = 45;
@@ -137,6 +139,16 @@ public void run() {
 
          for (int i = 0; i < player.getLife(); i++) {
              g2.drawImage(livesImage.getImage(), livesX + i*livesWidth, livesY, null);
+=======
+      
+         int livesX = 20;
+         int livesY = 60;
+         int livesWidth = 40;
+    
+        for (int i = 0; i < player.getLife(); i++) {
+            lifeIcon = new ImageIcon(getClass().getResource("/Image/shipLife.png"));
+            g2.drawImage(lifeIcon.getImage(),livesX + i * livesWidth, livesY, null);
+>>>>>>> 7227380afc8a02f1b000c3a22513ea7b2c67625a
          }
     }
     //kiểm tra đạn có trúng không
