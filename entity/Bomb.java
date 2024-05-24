@@ -3,20 +3,24 @@ package entity;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import main.Panel;
+import javax.swing.ImageIcon;
 
 import main.KeyInput;
 
 public class Bomb extends Sprite {
     Panel p;
     KeyInput kIP;
+    private ImageIcon bombImage;
     public double countDown=0;
     public Boolean destroyed=false;
+    public boolean shot=false;
 
     public boolean alive=false;
     public Bomb (Panel p,KeyInput kIP){
         this.p=p;
         this.kIP=kIP;
         setDefaultValue();
+        bombImage = new ImageIcon(getClass().getResource("/Image/bombImage.png"));
     }
     public void setDefaultValue(){
         this.x=2000;
@@ -29,6 +33,7 @@ public class Bomb extends Sprite {
     public void update(){
         if(kIP.spacePressed==true&&alive==false&&countDown<=0){
             alive=true;
+            shot=true;
             x=p.player.x+26;
             y=600;
             countDown=p.screenHight/speed;
@@ -40,8 +45,7 @@ public class Bomb extends Sprite {
         countDown-=1;
     }
     public void draw(Graphics2D g2){
-        g2.setColor(Color.white);
-        g2.fillRect(x,y,width,height);
+        g2.drawImage(bombImage.getImage(), x, y, null);
     }
     
 }
